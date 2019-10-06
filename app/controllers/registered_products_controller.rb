@@ -1,0 +1,2 @@
+class RegisteredProductsController < ApplicationController
+end
