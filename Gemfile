@@ -32,6 +32,8 @@ group :development, :test do
 end
 
 group :development do
+  ##A runtime developer console and IRB alternative with powerful introspection capabilities. http://pryrepl.org
+  gem 'pry-rails'
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
