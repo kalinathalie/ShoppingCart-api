@@ -13,7 +13,7 @@ class PurchasesController < ApplicationController
     if product.save!
       render json: product
     else
-      render json: @purchase.errors, status: :unprocessable_entity
+      render json: product.errors, status: :unprocessable_entity
     end
   end
 
@@ -22,7 +22,7 @@ class PurchasesController < ApplicationController
     if @coupon.update(purchase_id: @purchase.id)
       render json: @coupon
     else
-      render json: @purchase.errors, status: :unprocessable_entity
+      render json: @coupon.errors, status: :unprocessable_entity
     end
   end
 
@@ -37,14 +37,18 @@ class PurchasesController < ApplicationController
     render json: @purchase.purchased_products.index_by(&:id).merge(result)
   end
 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_purchase
-      @purchase = Purchase.find(params[:id])
+      @purchase = Purchase.find_by(token: params[:token])
     end
 
-    # Only allow a trusted parameter "white list" through.
-    def purchase_params
-      params.fetch(:purchase, {})
+    def set_product
+      @registered_product = RegisteredProduct.find_by(name: params[:name])
+    end
+
+    def set_coupon
+      @coupon = Coupon.find_by(code: params[:code])
     end
 end
